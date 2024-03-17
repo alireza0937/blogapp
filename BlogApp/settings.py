@@ -19,7 +19,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "blog"
+    "blog",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -54,13 +55,13 @@ WSGI_APPLICATION = "BlogApp.wsgi.application"
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fanap',
-        'USER': 'postgres',
-        'PASSWORD': '1377',
-        'HOST': '127.0.0.1', 
-        'PORT': '5432',        
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "fanap",
+        "USER": "postgres",
+        "PASSWORD": "1377",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
     }
 }
 
