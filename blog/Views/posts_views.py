@@ -9,6 +9,7 @@ class PostsViewSet(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
+    mixins.CreateModelMixin,
 ):
     queryset = Posts.objects.all()
     serializer_class = PostsSerializers
