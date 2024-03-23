@@ -19,6 +19,13 @@ class Comment(models.Model):
     post = models.ForeignKey(Posts, on_delete=models.CASCADE)
     text = models.TextField()
     email = models.EmailField()
+    answer = models.ForeignKey(
+        "Comment",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="replies",
+    )
 
     def __str__(self):
         return f"{self.email} -> {self.text}"
@@ -26,3 +33,5 @@ class Comment(models.Model):
     class Meta:
         db_table = "Comments"
         verbose_name_plural = "Comments"
+        
+        
