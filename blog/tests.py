@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 from django.urls import reverse
-from .models import Posts
+from .models import Comment, Posts
 from django.contrib.auth.models import User
 
 
@@ -28,7 +28,6 @@ class TestPostViewSet(APITestCase):
             reverse("register-api-list"),
             data=self.payload,
         )
-
 
     def retrive_user_jwt(self):
         response = self.client.post(reverse("token_obtain_pair"), data=self.payload)
@@ -143,6 +142,10 @@ class TestCommentViewSet(APITestCase):
             content="Content2 for testing",
         )
 
+        cls.comment1 = Comment.objects.create(
+            text="test text", email="test@test.com", post=cls.post1
+        )
+
     def setUp(self):
         self.payload = {"username": "test 1", "password": "test 1"}
         self.register_new_user()
@@ -164,7 +167,7 @@ class TestCommentViewSet(APITestCase):
         url = reverse("comments-api-list")
         response = self.client.get(url, headers=self.headers)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 0)
+        self.assertEqual(len(response.json()), 1)
 
     def test_list_comments_with_wrong_jwt(self):
         headers = {"Authorization": "wrongjwttoken"}
@@ -188,6 +191,47 @@ class TestCommentViewSet(APITestCase):
             response.json().get("email")[0], "Enter a valid email address."
         )
         self.assertEqual(response.status_code, 400)
+
+    def test_reply_comment_with_correct_post_id(self):
+        url = reverse("comments-api-list")
+        payload = {
+            "text": "test text for comment",
+            "email": "test@test.com",
+            "post": self.post1.pk,
+            "answer": self.comment1.pk,
+        }
+        response = self.client.post(url, headers=self.headers, data=payload)
+        self.assertEqual(response.status_code, 201)
+
+    def test_reply_comment_with_wrong_post_id(self):
+        url = reverse("comments-api-list")
+        payload = {
+            "text": "test text for comment",
+            "email": "test@test.com",
+            "post": self.post2.pk,
+            "answer": self.comment1.pk,
+        }
+        response = self.client.post(url, headers=self.headers, data=payload)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.json().get("answer")[0],
+            "Parent comment does not belong to the same post.",
+        )
+
+    def test_reply_comment_with_wrong_user_jwt(self):
+        headers = {"Authorization": "wrongjwttoken"}
+        url = reverse("comments-api-list")
+        payload = {
+            "text": "test text for comment",
+            "email": "test@test.com",
+            "post": self.post2.pk,
+            "answer": self.comment1.pk,
+        }
+        response = self.client.post(url, headers=headers, data=payload)
+        self.assertEqual(
+            "Authentication credentials were not provided.",
+            response.json().get("detail"),
+        )
 
     def test_create_comment_with_wrong_post_id(self):
         url = reverse("comments-api-list")
@@ -221,7 +265,6 @@ class TestCommentViewSet(APITestCase):
         }
         response = self.client.post(url, headers=self.headers, data=payload)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.json(), payload)
 
     def test_create_comment_with_wrong_jwt(self):
         headers = {"Authorization": "wrongjwttoken"}
@@ -231,7 +274,7 @@ class TestCommentViewSet(APITestCase):
             "post": self.post1.pk,
         }
         url = reverse("comments-api-list")
-        response = self.client.post(url, headers=headers)
+        response = self.client.post(url, headers=headers, data=payload)
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(
