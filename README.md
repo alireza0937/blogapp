@@ -23,10 +23,10 @@ Before you begin, ensure you have the following installed on your system:
     cd blogapp
     ```
 
-3. Build the Docker image:
+3. Run the Docker image:
 
     ```bash
-    docker-compose build
+    docker-compose up
     ```
 
 ## Running the Application
