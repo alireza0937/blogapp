@@ -16,11 +16,6 @@ class TestRegisterViewSet(APITestCase):
         payload = {"username": "alireza", "password": "1234"}
         response = self.client.post(url, data=payload)
 
-        get_jwt = self.client.post(
-            reverse("token_obtain_pair"),
-            data={"username": "alireza", "password": "1234"},
-        )
-
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json(), {"message": "Successfully registered."})
 

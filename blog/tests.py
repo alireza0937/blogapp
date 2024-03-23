@@ -24,7 +24,7 @@ class TestPostViewSet(APITestCase):
         self.retrive_user_jwt()
 
     def register_new_user(self):
-        response = self.client.post(
+        self.client.post(
             reverse("register-api-list"),
             data=self.payload,
         )
@@ -152,7 +152,7 @@ class TestCommentViewSet(APITestCase):
         self.retrive_user_jwt()
 
     def register_new_user(self):
-        response = self.client.post(
+        self.client.post(
             reverse("register-api-list"),
             data=self.payload,
         )

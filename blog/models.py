@@ -33,5 +33,3 @@ class Comment(models.Model):
     class Meta:
         db_table = "Comments"
         verbose_name_plural = "Comments"
-        
-        
