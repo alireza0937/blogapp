@@ -19,7 +19,7 @@ jobs:
           POSTGRES_DB: fanap
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: 1377
-          
+
       redis:
         image: redis:latest
 
@@ -34,6 +34,9 @@ jobs:
 
     - name: Install dependencies
       run: pip install -r requirments.txt
+      env:
+          HOST: 'POSTgres'
+          REDIS: 'redis'
 
     - name: Apply database migrations
       run: |
