@@ -1,15 +1,18 @@
 from pathlib import Path
+import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = "django-insecure-j0s&!b0&td4#uz(33=v&v8&pc(8b9p_lq7_08eh1a8$^1^%4h&"
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", "django-insecure-j0s&!b0&td4#uz(33=v&v8&pc(8b9p_lq7_08eh1a8$^1^%4h&"
+)
 
 
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get().split(",")
 
 
 INSTALLED_APPS = [
@@ -62,7 +65,7 @@ DATABASES = {
         "NAME": "fanap",
         "USER": "postgres",
         "PASSWORD": "1377",
-        "HOST": "127.0.0.1",
+        "HOST": "postgres",
         "PORT": "5432",
     }
 }
@@ -101,3 +104,14 @@ STATIC_URL = "static/"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/0",  # Adjust this according to your Redis configuration
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
