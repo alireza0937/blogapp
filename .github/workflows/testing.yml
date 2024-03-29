@@ -19,8 +19,8 @@ jobs:
           POSTGRES_DB: fanap
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: 1377
-        # ports:
-        #   - 5432:5432
+        ports:
+          - 5432:5432
 
       redis:
         image: redis:latest
