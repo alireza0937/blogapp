@@ -14,7 +14,7 @@ class CommentsViewSet(
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        instance = serializer.save()
+        serializer.save()
         cache.delete("comments_list_cache_key")
 
     def list(self, request, *args, **kwargs):

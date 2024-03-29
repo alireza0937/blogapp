@@ -52,5 +52,5 @@ class PostsViewSet(
         cache.delete(self._get_single_post_cache_key(instance.pk))
 
     def perform_create(self, serializer):
-        instance = serializer.save()
+        serializer.save()
         cache.delete(self._get_all_posts_cache_key())
