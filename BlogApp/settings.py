@@ -65,7 +65,7 @@ DATABASES = {
         "NAME": "fanap",
         "USER": "postgres",
         "PASSWORD": "1377",
-        "HOST": "postgres",
+        "HOST": "127.0.0.1",
         "PORT": "5432",
     }
 }
@@ -109,7 +109,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://redis:6379/0",
+        "LOCATION": "redis://127.0.0.1:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
