@@ -20,9 +20,16 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: 1377
 
+        networks:
+          - mynetwork
+
       redis:
         image: redis:latest
+        networks:
+          - mynetwork
 
+    networks:  
+      mynetwork:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
