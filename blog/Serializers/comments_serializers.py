@@ -10,7 +10,7 @@ class CommentSerializers(serializers.ModelSerializer):
 
     def validate_answer(self, value):
         post = self.initial_data.get("post")
-        if value.post_id != int(post):
+        if value and value.post_id != int(post):
             raise serializers.ValidationError(
                 "Parent comment does not belong to the same post."
             )
