@@ -24,7 +24,7 @@ jobs:
       redis:
         image: redis:lastest
         ports:
-          -6379:6379
+          - 6379:6379
 
     steps:
     - name: Checkout repository
