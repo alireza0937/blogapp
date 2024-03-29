@@ -34,9 +34,6 @@ jobs:
 
     - name: Install dependencies
       run: pip install -r requirments.txt
-      env:
-        HOST: postgres
-        REDIS: redis
 
     - name: Apply database migrations
       run: |

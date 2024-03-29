@@ -6,9 +6,6 @@ services:
     container_name: django
     ports:
       - "8000:8000"
-    environment:
-      - HOST=postgres
-      - REDIS=redis
     command: sh -c "python3 manage.py migrate && python3 manage.py makemigrations && python3 manage.py runserver 0.0.0.0:8000"
     depends_on:
       - postgres
