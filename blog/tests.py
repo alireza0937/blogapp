@@ -2,13 +2,11 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from .models import Comment, Posts
-from django.contrib.auth.models import User
 
 
 class TestPostViewSet(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = User.objects.create_user(username="test user", password="1234")
         cls.post1 = Posts.objects.create(
             title="Title1 for testing",
             content="Content1 for testing",
@@ -132,7 +130,6 @@ class TestCommentViewSet(APITestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.user = User.objects.create_user(username="test user", password="1234")
         cls.post1 = Posts.objects.create(
             title="Title1 for testing",
             content="Content1 for testing",
