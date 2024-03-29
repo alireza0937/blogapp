@@ -26,3 +26,6 @@ services:
       POSTGRES_PASSWORD: 1377
       POSTGRES_DB: fanap
       TZ: 'Asia/Tehran'
+
+    volumes:
+      - /custom/mount:/var/lib/postgresql/data
