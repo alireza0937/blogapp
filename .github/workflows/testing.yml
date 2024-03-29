@@ -15,6 +15,7 @@ jobs:
     services:
       postgres:
         image: postgres:latest
+        container_name: postgres
         env:
           POSTGRES_DB: fanap
           POSTGRES_USER: postgres
@@ -23,6 +24,7 @@ jobs:
           - 5432:5432
       redis:
         image: redis:latest
+        container_name: redis
         ports:
           - 6379:6379
 
