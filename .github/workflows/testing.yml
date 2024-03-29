@@ -22,7 +22,7 @@ jobs:
         ports:
           - 5432:5432
       redis:
-        image:redis:lastest
+        image: redis:lastest
         ports:
           -6379:6379
 
